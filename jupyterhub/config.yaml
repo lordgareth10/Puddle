@@ -1,0 +1,22 @@
+hub:
+  configuration: |
+    hub:
+      config:
+        JupyterHub:
+          admin_access: true
+          authenticator_class: nativeauthenticator.NativeAuthenticator
+          Authenticator:
+            admin_users:
+              - test
+
+postgresql:
+  enabled: false
+
+externalDatabase:
+  host: "svc-postgres-headless"
+  user: postgres-db
+  password: plschangeme
+
+global:
+  imageRegistry: docker.io/bitnami
+

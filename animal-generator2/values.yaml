@@ -1,0 +1,34 @@
+# values.yaml
+appName: "animal-generator2"
+# Database configuration
+database:
+  host: "svc-postgres-headless"
+  port: 5432
+  name: "postgres-db"
+  user: "postgres-db"
+  password: "plschangeme"
+
+# Application configuration
+application:
+  farm: "Farm2"
+  table: "whale_locations"
+  delay_range: "1-20"
+  appName: "animal-generator2"
+
+serviceAccount:
+  create: true
+  name: ""
+
+#################### Create Service ####################
+
+service:
+  type: ClusterIP
+  port: 80
+# Kubernetes Deployment configuration
+image:
+  repository: jieshilyn/whales_pg_generator
+  tag: latest
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+containerPort: 8081

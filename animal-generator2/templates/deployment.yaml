@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name | default .Release.Name }}
+      containers:
+        - name: {{ .Values.appName }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+          env:
+            - name: PG_HOST
+              value: "{{ .Values.database.host }}"
+            - name: PG_PORT
+              value: "{{ .Values.database.port }}"
+            - name: PG_DATABASE
+              value: "{{ .Values.database.name }}"
+            - name: PG_USER
+              value: "{{ .Values.database.user }}"
+            - name: PG_PASSWORD
+              value: "{{ .Values.database.password }}"
+            - name: FARM
+              value: "{{ .Values.application.farm }}"
+            - name: TABLE
+              value: "{{ .Values.application.table }}"
+            - name: DELAY_RANGE
+              value: "{{ .Values.application.delay_range }}"
